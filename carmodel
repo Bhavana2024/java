@@ -1,0 +1,66 @@
+package cardealer;
+import java.util.Scanner;
+public class carmodel {
+
+
+	    private String model;//model of the car
+	    private double carPrice;//price of car
+	    public carmodel(String model, double carPrice) {
+	        this.model = model;
+	        this.carPrice =  carPrice;
+	    }
+
+	    public String getModel() {
+	        return model;
+	    }
+
+	    public double getcarPrice() {
+	        return carPrice;
+	    }
+	}
+
+	class BillingSystem {
+	    private carmodel[] cars;
+
+	    public BillingSystem() {
+	        cars = new carmodel[7];
+	        cars[0] = new carmodel("Polo Trendline", 8.70);
+	        cars[1] = new carmodel("Polo Highline", 10.09);
+	        cars[2] = new carmodel("Virtus Trendline", 11.05);
+	        cars[3] = new carmodel("Virtus Highline", 13.08);
+	        cars[4] = new carmodel("Taigun Trendline", 14.89);
+	        cars[5] = new carmodel("Taigun Highline", 15.42);
+	        cars[6] = new carmodel("Taigun Topline", 17.71);
+	    }
+
+	    public void calculateTotalCost(String selectedCarModel) {
+	    	carmodel selectedCar = null;
+	        for (carmodel car : cars) {
+	            if (car.getModel().equalsIgnoreCase(selectedCarModel)) {
+	                selectedCar = car;
+	                break;
+	            }
+	        }
+
+	        if (selectedCar != null) {
+	            double totalCost = selectedCar.getcarPrice();
+
+	            System.out.println("Total cost: " + totalCost + " ("
+	                    + selectedCar.getModel() + " " + selectedCar.getcarPrice() + ")");
+	        } else {
+	            System.out.println("Invalid car model selected.");
+	        }
+	    }
+
+	    public static void main(String[] args) {
+	        BillingSystem billingSystem = new BillingSystem();
+	        Scanner scanner = new Scanner(System.in);
+
+	        System.out.print("Select car model: ");
+	        String selectedCarModel = scanner.nextLine();
+
+	        billingSystem.calculateTotalCost(selectedCarModel);
+
+	        scanner.close();
+	    }
+	}
