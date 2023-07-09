@@ -1,0 +1,78 @@
+package riding;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+public class Drivers {
+	 
+
+	    private String name;
+	    private String carModel;
+	    private double rating;
+	    private double distanceFromCustomer;
+
+	    public Drivers(String name, String carModel, double rating, double distanceFromCustomer) {
+	        this.name = name;
+	        this.carModel = carModel;
+	        this.rating = rating;
+	        this.distanceFromCustomer = distanceFromCustomer;
+	    }
+
+	    public String getName() {
+	        return name;
+	    }
+
+	    public String getCarModel() {
+	        return carModel;
+	    }
+
+	    public double getRating() {
+	        return rating;
+	    }
+
+	    public double getDistanceFromCustomer() {
+	        return distanceFromCustomer;
+	    }
+	}
+
+	class RideBookingSystem {
+	    private static final double RATE_PER_KM = 8;
+
+	    public static void main(String[] args) {
+	        List<Drivers> drivers = new ArrayList<>();
+	        drivers.add(new Drivers("Driver A", "Sedan", 4, 500));
+	        drivers.add(new Drivers("Driver B", "Hatchback", 4.3, 1000));
+	        drivers.add(new Drivers("sDriver C", "5-Seater", 4.8, 200));
+	        drivers.add(new Drivers("Driver D", "Sedan", 4.1, 700));
+	        drivers.add(new Drivers("Driver E", "Hatchback", 4.7, 430));
+
+	        double rideDistance = 20.5;
+	        String carRequested = "Hatchback";
+
+	        Drivers suitableDriver = findSuitableDriver(drivers, rideDistance, carRequested);
+	        if (suitableDriver != null) {
+	            double totalCharge = calculateCharge(rideDistance);
+	            System.out.println("Driver " + suitableDriver.getName() + " will get you to the destination.");
+	            System.out.println("Your charge will be Rs " + totalCharge);
+	        } else {
+	            System.out.println("No suitable drivers found for the requested car.");
+	        }
+	    }
+
+	    public static Drivers findSuitableDriver(List<Drivers> drivers, double rideDistance, String carRequested) {
+	        drivers.sort(Comparator.comparingDouble(Drivers::getDistanceFromCustomer));
+
+	        for (Drivers driver : drivers) {
+	            if (driver.getCarModel().equalsIgnoreCase(carRequested) && driver.getRating() >= 4) {
+	                return driver;
+	            }
+	        }
+
+	        return null;
+	    }
+
+	    public static double calculateCharge(double rideDistance) {
+	        return rideDistance * RATE_PER_KM;
+	    }
+	}
